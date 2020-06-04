@@ -1,4 +1,4 @@
-# PySparkAudit: PySpark Data Audit 
+# PySparkAudit: PySpark Auto Feature Selector
 
 This is our PySpark Data Audit library repositories.
 The ``API`` can be found at: https://runawayhorse001.github.io/PySparkAudit. 

@@ -4,7 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/AutoFeatures.iml" filepath="$PROJECT_DIR$/.idea/AutoFeatures.iml" />
       <module fileurl="file://$PROJECT_DIR$/../CodeTest/.idea/CodeTest.iml" filepath="$PROJECT_DIR$/../CodeTest/.idea/CodeTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Fibo/.idea/FirstPackage.iml" filepath="$PROJECT_DIR$/../Fibo/.idea/FirstPackage.iml" />
       <module fileurl="file://$PROJECT_DIR$/../PySparkAudit-master/.idea/PySparkAudit-master.iml" filepath="$PROJECT_DIR$/../PySparkAudit-master/.idea/PySparkAudit-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../TorchTour/.idea/TorchTour.iml" filepath="$PROJECT_DIR$/../TorchTour/.idea/TorchTour.iml" />
       <module fileurl="file://$PROJECT_DIR$/../mlapi/.idea/mlapi.iml" filepath="$PROJECT_DIR$/../mlapi/.idea/mlapi.iml" />
       <module fileurl="file://$PROJECT_DIR$/../return_review/.idea/return_review.iml" filepath="$PROJECT_DIR$/../return_review/.idea/return_review.iml" />
     </modules>

@@ -12,7 +12,6 @@ try:
 except IOError:
     requirements = []
 
-
 setup(name='AutoFeatures',
 	    install_requires=requirements,
       version='1.0.0',
