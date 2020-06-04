@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/AutoFeatures.iml" filepath="$PROJECT_DIR$/.idea/AutoFeatures.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../CodeTest/.idea/CodeTest.iml" filepath="$PROJECT_DIR$/../CodeTest/.idea/CodeTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../PySparkAudit-master/.idea/PySparkAudit-master.iml" filepath="$PROJECT_DIR$/../PySparkAudit-master/.idea/PySparkAudit-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mlapi/.idea/mlapi.iml" filepath="$PROJECT_DIR$/../mlapi/.idea/mlapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../return_review/.idea/return_review.iml" filepath="$PROJECT_DIR$/../return_review/.idea/return_review.iml" />
+    </modules>
+  </component>
+</project>
