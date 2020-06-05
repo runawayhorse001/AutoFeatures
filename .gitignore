@@ -130,7 +130,8 @@ target/
 # exclude data from source control by default
 /data/
 
-
+# exclede jupyter notebook
+/ipynb
 
 # exclude sensitive files from repo
 etc/keys/*.asc
