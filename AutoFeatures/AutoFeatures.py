@@ -1,12 +1,8 @@
-import os
-import shutil
 import time
 import pandas as pd
 import numpy as np
 import seaborn as sns
-from functools import reduce
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
 
 import pyspark.sql.functions as F
 from pyspark.mllib.stat import Statistics
@@ -66,6 +62,7 @@ class AutoFeatures:
         ['CreatDate'], [])
         """
 
+        # all data types in pyspark (for reference)
         # __all__ = [
         # "DataType", "NullType", "StringType", "BinaryType", "BooleanType", "DateType",
         # "TimestampType", "DecimalType", "DoubleType", "FloatType", "ByteType", "IntegerType",
@@ -115,7 +112,8 @@ class AutoFeatures:
         return encodered_name
 
     @classmethod
-    def get_dummy(cls, df_in, index_col=None, categorical_cols=None, continuous_cols=None, label_col=None, dropLast=False):
+    def get_dummy(cls, df_in, index_col=None, categorical_cols=None, continuous_cols=None, label_col=None,
+                  dropLast=False):
         """
         Get dummy variables and concat with continuous variables for ml modeling.
 
@@ -170,8 +168,7 @@ class AutoFeatures:
         else:
             categorical_cols = []
 
-        indexers = [StringIndexer(inputCol=c, outputCol="{0}_indexed".format(c))
-                    for c in categorical_cols]
+        indexers = [StringIndexer(inputCol=c, outputCol="{0}_indexed".format(c)) for c in categorical_cols]
 
         # default setting: dropLast=True
         encoders = [OneHotEncoder(inputCol=indexer.getOutputCol(),
@@ -243,7 +240,6 @@ class AutoFeatures:
 
         start = time.time()
 
-        cls.missing_thold = missing_thold
         cls.total = data.count()
 
         rate_missing = [data.filter((F.col(c).isNull()) | (F.trim(F.col(c)) == '')).count() / cls.total
@@ -260,12 +256,16 @@ class AutoFeatures:
         if display:
             plt.figure(figsize=(10, 8))
             sns.distplot(rate_missing, bins=50, kde=False, rug=True, color='blue')
+            plt.axvline(missing_thold, color='red', linestyle='--')
+            plt.ylabel('Number of the features')
+            plt.xlabel('Missing value percentage')
+            plt.title('The missing value percentage Histogram')
             plt.show()
 
         return missing_drop
 
     @classmethod
-    def corr_selector(cls, data, index_col=None, label_col=None, corr_thold=0.96, method="pearson", rotation=True,
+    def corr_selector(cls, data, index_col=None, label_col=None, corr_thold=0.9, method="pearson", rotation=True,
                       display=False, tracking=False, cat_num=2):
         """
         collinear selector: identify collinear features with threshold
@@ -327,7 +327,7 @@ class AutoFeatures:
 
         if display and corr_drop:
             dropped = corr[corr_drop]
-            fig = plt.figure(figsize=(40, 40))  # Push new figure on stack
+            fig = plt.figure(figsize=(80, 40))  # Push new figure on stack
             sns_plot = sns.heatmap(dropped, cmap="YlGnBu",
                                    xticklabels=dropped.columns.values,
                                    yticklabels=corr.columns.values,
@@ -343,10 +343,11 @@ class AutoFeatures:
         return corr_drop
 
     @classmethod
-    def importance_selector(cls, data, index_col, label_col, task, importance_thold=0, cumulative_thold=0.96,
-                            missing_thold=0.68, corr_thold=0.9, method="pearson", rotation=True, n_train=5, top_n=20,
+    def importance_selector(cls, data, index_col, label_col, task, importance_thold=None, cumulative_thold=0.96,
+                            missing_thold=0.6, corr_thold=0.9, method="pearson", rotation=True, n_train=5, top_n=20,
                             dropLast=False, display=False, tracking=False, cat_num=2):
         """
+        importance selector: identify low feature importance features with threshold
 
         :param data: input dataframe
         :param index_col: the name of the index column
@@ -371,11 +372,12 @@ class AutoFeatures:
 
         start = time.time()
 
+        # essential drop list
         es_dropped = cls.essential_drop(data, index_col=index_col, label_col=label_col, missing_thold=missing_thold,
                                         corr_thold=corr_thold, method=method, rotation=rotation, display=display,
                                         tracking=tracking, cat_num=cat_num)
 
-        data = data = data.drop(*es_dropped)
+        data = data.drop(*es_dropped)
         data = data.fillna(0)
         data = data.na.fill('null')
 
@@ -416,9 +418,7 @@ class AutoFeatures:
         feature_importances = pd.DataFrame(d).sort_values('avg_importance', ascending=False)
         feature_importances['cumulative_importance'] = feature_importances['avg_importance'].cumsum()
 
-        if importance_thold and cumulative_thold:
-            importance_thold = importance_thold
-        else:
+        if not importance_thold:
             importance_thold = feature_importances['avg_importance'][np.max(np.where(
                                          feature_importances['cumulative_importance'] < cumulative_thold))]
 
@@ -427,12 +427,15 @@ class AutoFeatures:
                        if [a < importance_thold for a in feature_importance][i] and dummy_name[i] in continuous_cols]
         # the dummy names which importance higher than threshold
         keeped_dummy = ['_'.join(dummy_name[i].split('_')[:-1]) for i in range(len(dummy_name))
-                        if [a > importance_thold for a in feature_importance][i] and dummy_name[i] not in continuous_cols]
+                        if [a > importance_thold for a in feature_importance][i]
+                        and dummy_name[i] not in continuous_cols]
         # the dummy names which importance lower than threshold
         dropped_dummy = ['_'.join(dummy_name[i].split('_')[:-1]) for i in range(len(dummy_name))
-                         if [a <= importance_thold for a in feature_importance][i] and dummy_name[i] not in continuous_cols]
+                         if [a <= importance_thold for a in feature_importance][i]
+                         and dummy_name[i] not in continuous_cols]
 
-        # the categorical cols need to be dropped (not the dummy name)
+        # the categorical cols need to be dropped (not the dummy name). It's a little bit tricky to determine the
+        # drop out the categorical cols.
         dropped_cat = [a for a in list(dict.fromkeys(dropped_dummy))
                        if (a not in list(dict.fromkeys(keeped_dummy)) and a in categorical_cols)]
 
@@ -444,16 +447,31 @@ class AutoFeatures:
             print('All importance selector took = ' + str(end - start) + ' s')
 
         if display:
+            if not importance_thold:
+                # plot the threshold of the cumulative importance
+                plt.figure(figsize=(10, 8))
+                ax = sns.lineplot(x=range(1, len(feature_importances) + 1), y="cumulative_importance",
+                                  data=feature_importances, color='blue')
+
+                cat_point = np.max(np.where(feature_importances['cumulative_importance'] < i_thre))
+                # plt.axhline(i_thre, ls='--')
+                plt.text(cat_point + 5, i_thre, (cat_point, i_thre), color='red')
+                plt.axvline(cat_point, color='red', linestyle='--')
+                plt.xlabel('Number of the features')
+                plt.show()
+
+            # plot top_n feature importance
             plt.figure(figsize=(10, 8))
             plt_data = feature_importances[:top_n]
             ax = sns.barplot(x='avg_importance', y='feature', data=plt_data)
             ax.set_xlabel('avg_importance')
+            plt.title("Top {} feature importance ".format(top_n), fontsize=20)
             plt.show()
 
         return imp_drop
 
     @classmethod
-    def essential_drop(cls, data, index_col, label_col, missing_thold=0.68, corr_thold=0.96, method="pearson",
+    def essential_drop(cls, data, index_col, label_col, missing_thold=0.6, corr_thold=0.9, method="pearson",
                        rotation=True, display=False, tracking=False, cat_num=2):
         """
         Essential drop (included: missing selector, unique selector, correlation selector) is all in one functions
@@ -480,7 +498,7 @@ class AutoFeatures:
                                       method=method, rotation=rotation, display=display, tracking=tracking,
                                       cat_num=cat_num)
 
-        all_drop = unique_drop + corr_drop   + missing_drop
+        all_drop = unique_drop + corr_drop + missing_drop
 
         end = time.time()
 
@@ -490,13 +508,13 @@ class AutoFeatures:
         return list(dict.fromkeys(all_drop))
 
     @classmethod
-    def ensemble_drop(cls, data, index_col, label_col, task, importance_thold=0, cumulative_thold=0.96, missing_thold=0.68,
-                      corr_thold=0.9, method="pearson", rotation=True, n_train=5, top_n=20,
+    def ensemble_drop(cls, data, index_col, label_col, task, importance_thold=None, cumulative_thold=0.96,
+                      missing_thold=0.6, corr_thold=0.9, method="pearson", rotation=True, n_train=5, top_n=20,
                       dropLast=False, display=False, tracking=False, cat_num=2):
 
         """
-        Ensemble drop (based on essential dop) is a method to identify the essential drop features based on ensemble
-        ml model (GBM).
+        Ensemble drop (based on essential drop, that is to say it has included the functionals of essential drop) is a
+        method to identify the essential drop features based on ensemble ML model (GBM).
 
         :param data: input dataframe
         :param index_col: the name of the index column
@@ -548,7 +566,7 @@ if __name__ == '__main__':
                ('b', 'm', 5, 4, 1, None, 1),
                ('c', 'm', 8, 9, 1, None, 0),
                ('d', 'f', 2, 3, 1, None, 1),
-               ('e', 'm', 5, 5, 1, 3, 0),
+               ('e', 'm', 5, 5, 1, 4, 0),
                ('f', 'm', 8, 9, 1, 4, 1)]
     col_name = ['col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7']
 
@@ -556,9 +574,9 @@ if __name__ == '__main__':
 
     df.show()
 
-    index_col = 'col1'
-    label_col = 'col7'  #
-    categorical_cols = ['col2']
+    indexCol = 'col1'
+    labelCol = 'col7'  #
+    categoricalCols = ['col2']
     task = 'classification'
 
     Fs = AutoFeatures()
@@ -568,23 +586,24 @@ if __name__ == '__main__':
     print('missing_selector')
     print(Fs.missing_selector(df))
     print('corr_selector')
-    print(Fs.corr_selector(df, index_col=index_col, label_col=label_col, corr_thold=0.99))
-
-    print('essential_drop')
-    to_drop = Fs.essential_drop(df, index_col=index_col, label_col=label_col, missing_thold=0.68, corr_thold=0.99,
-                                method="pearson", rotation=True, display=True, tracking=True, cat_num=2)
-    print(to_drop)
+    print(Fs.corr_selector(df, index_col=indexCol, label_col=labelCol))
 
     # get_dummy test
-    names, dummied = Fs.get_dummy(df, index_col=index_col, categorical_cols=categorical_cols, label_col=label_col)
+    names, dummied = Fs.get_dummy(df, index_col=indexCol, categorical_cols=categoricalCols, label_col=labelCol)
 
     print(names)
     dummied.show()
 
-    print('importance_selector')
-    print(Fs.importance_selector(df, index_col=index_col, label_col=label_col, task=task))
+    # essential_drop test
+    to_drop = Fs.essential_drop(df, index_col=indexCol, label_col=labelCol, method="pearson",
+                                rotation=True, display=True, tracking=True, cat_num=2)
+    print('essential_drop: {}'.format(to_drop))
 
-    print('ensemble_drop')
-    to_drop = Fs.ensemble_drop(df, index_col=index_col, label_col=label_col, task=task)
-    print(to_drop)
+    # importance threshold is determined by importance_thold or cumulative_thold, if importance_thold is missing then
+    # the importance_thold will be calculated based on cumulative_thold
+    print('importance_selector')
+    print(Fs.importance_selector(df, index_col=indexCol, label_col=labelCol, importance_thold=0, task=task))
+
+    to_drop = Fs.ensemble_drop(df, index_col=indexCol, label_col=labelCol, importance_thold=0, task=task)
+    print('ensemble_drop::{}'.format(to_drop))
 

@@ -72,8 +72,8 @@ AutoFeatures  Ensemble Drop
 and 
 
 
-  .. figure:: images/results2.png
+  .. figure:: images/results21.png
     :align: center
 
-  .. figure:: images/results3.png
+  .. figure:: images/results22.png
     :align: center    

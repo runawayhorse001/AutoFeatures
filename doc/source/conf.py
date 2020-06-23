@@ -30,7 +30,6 @@ author = 'Wenqiang Feng'
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.graphviz',
               'sphinxcontrib.dd',
-              'sphinxcontrib.contentui',
               'sphinx_tabs.tabs']
 
 # Add any paths that contain templates here, relative to this directory.

@@ -36,7 +36,7 @@ print('corr_selector::{}'.format(to_drop))
 
 # essential selector (included: missing selector, unique selector, correlation selector)
 to_drop = Fs.essential_drop(data, index_col=indexCol, label_col=labelCol,
-                            missing_thold=0.68, corr_thold=0.9, method="pearson", rotation=True,
+                            missing_thold=0.6, corr_thold=0.9, method="pearson", rotation=True,
                             display=True, tracking=True, cat_num=2)
 print('essential_drop::{}'.format(to_drop))
 

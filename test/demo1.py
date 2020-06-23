@@ -26,7 +26,7 @@ indexCol = []
 labelCol = []
 
 to_drop = Fs.essential_drop(df, index_col=indexCol, label_col=labelCol, missing_thold=0.68, corr_thold=0.9,
-                    method="pearson", rotation=True, display=True, tracking=True, cat_num=2)
+                            method="pearson", rotation=True, display=True, tracking=True, cat_num=2)
 
 print('essential dropped features:{}'.format(to_drop))
 
