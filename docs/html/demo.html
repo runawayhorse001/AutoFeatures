@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. AutoFeatures Demos &mdash; AutoFeatures: PySpark Auto Feature Selector 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. Main Reference" href="reference.html" />
+    <link rel="prev" title="3. AutoFeatures Class" href="auto_feature.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> AutoFeatures: PySpark Auto Feature Selector
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">1. Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">2. How to Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_feature.html">3. AutoFeatures Class</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. AutoFeatures Demos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#autofeatures-essential-drop">4.1. AutoFeatures Essential Drop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#autofeatures-ensemble-drop">4.2. AutoFeatures  Ensemble Drop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">5. Main Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AutoFeatures: PySpark Auto Feature Selector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>4. AutoFeatures Demos</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/demo.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="autofeatures-demos">
+<span id="demo"></span><h1>4. AutoFeatures Demos<a class="headerlink" href="#autofeatures-demos" title="Permalink to this headline">¶</a></h1>
+<p>The following demos are designed to show how to use <code class="docutils literal notranslate"><span class="pre">AutoFeatures</span></code> to select proper features.</p>
+<div class="section" id="autofeatures-essential-drop">
+<h2>4.1. AutoFeatures Essential Drop<a class="headerlink" href="#autofeatures-essential-drop" title="Permalink to this headline">¶</a></h2>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simple test</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="o">.</span><span class="n">builder</span> \
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Python Spark regression example&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.some.config.option&quot;</span><span class="p">,</span> <span class="s2">&quot;some-value&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+<span class="n">my_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+           <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+           <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+           <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+           <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+           <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">)]</span>
+<span class="n">col_name</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;col1&#39;</span><span class="p">,</span> <span class="s1">&#39;col2&#39;</span><span class="p">,</span> <span class="s1">&#39;col3&#39;</span><span class="p">]</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">col_name</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">AutoFeatures</span> <span class="kn">import</span> <span class="n">AutoFeatures</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">Fs</span> <span class="o">=</span> <span class="n">AutoFeatures</span><span class="p">()</span>
+<span class="n">indexCol</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">labelCol</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">to_drop</span> <span class="o">=</span> <span class="n">Fs</span><span class="o">.</span><span class="n">essential_drop</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">indexCol</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="n">labelCol</span><span class="p">,</span> <span class="n">missing_thold</span><span class="o">=</span><span class="mf">0.68</span><span class="p">,</span> <span class="n">corr_thold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+                            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cat_num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;essential dropped features:{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_drop</span><span class="p">))</span>
+
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>+----+----+----+
+<span class="p">|</span>col1<span class="p">|</span>col2<span class="p">|</span>col3<span class="p">|</span>
++----+----+----+
+<span class="p">|</span>   a<span class="p">|</span>   <span class="m">2</span><span class="p">|</span>   <span class="m">3</span><span class="p">|</span>
+<span class="p">|</span>   b<span class="p">|</span>   <span class="m">5</span><span class="p">|</span>   <span class="m">6</span><span class="p">|</span>
+<span class="p">|</span>   c<span class="p">|</span>   <span class="m">8</span><span class="p">|</span>   <span class="m">9</span><span class="p">|</span>
+<span class="p">|</span>   a<span class="p">|</span>   <span class="m">2</span><span class="p">|</span>   <span class="m">3</span><span class="p">|</span>
+<span class="p">|</span>   b<span class="p">|</span>   <span class="m">5</span><span class="p">|</span>   <span class="m">6</span><span class="p">|</span>
+<span class="p">|</span>   c<span class="p">|</span>   <span class="m">8</span><span class="p">|</span>   <span class="m">9</span><span class="p">|</span>
++----+----+----+
+
+Unique selector <span class="nv">took</span> <span class="o">=</span> <span class="m">6</span>.319664716720581 s
+Missing selector <span class="nv">took</span> <span class="o">=</span> <span class="m">17</span>.472286224365234 s
+Correlation selector <span class="nv">took</span> <span class="o">=</span> <span class="m">28</span>.78574252128601 s
+The essential selector <span class="nv">took</span> <span class="o">=</span> <span class="m">65</span>.23012638092041 s
+essential dropped features:<span class="o">[</span><span class="s1">&#39;col3&#39;</span><span class="o">]</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<img alt="_images/results0.png" src="_images/results0.png" />
+</div>
+<div class="figure align-center">
+<img alt="_images/results1.png" src="_images/results1.png" />
+</div>
+</div>
+<div class="section" id="autofeatures-ensemble-drop">
+<h2>4.2. AutoFeatures  Ensemble Drop<a class="headerlink" href="#autofeatures-ensemble-drop" title="Permalink to this headline">¶</a></h2>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="o">.</span><span class="n">builder</span> \
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Python Spark regression example&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.some.config.option&quot;</span><span class="p">,</span> <span class="s2">&quot;some-value&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+
+<span class="c1"># from PySparkAudit import dtypes_class, hist_plot, bar_plot, freq_items,feature_len</span>
+<span class="c1"># from PySparkAudit import dataset_summary, rates, trend_plot</span>
+
+<span class="c1"># path = &#39;/home/feng/Desktop&#39;</span>
+
+<span class="kn">from</span> <span class="nn">AutoFeatures</span> <span class="kn">import</span> <span class="n">AutoFeatures</span>
+
+<span class="c1"># load dataset</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;../data/credit_example.csv&#39;</span><span class="p">,</span>
+                      <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">toPandas</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">indexCol</span> <span class="o">=</span> <span class="s1">&#39;SK_ID_CURR&#39;</span>
+<span class="n">labelCol</span> <span class="o">=</span> <span class="s1">&#39;TARGET&#39;</span>
+
+<span class="n">task</span> <span class="o">=</span> <span class="s1">&#39;classification&#39;</span>
+
+<span class="n">Fs</span> <span class="o">=</span> <span class="n">AutoFeatures</span><span class="p">()</span>
+
+<span class="c1"># correlation selector</span>
+<span class="n">to_drop</span> <span class="o">=</span> <span class="n">Fs</span><span class="o">.</span><span class="n">corr_selector</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">indexCol</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="n">labelCol</span><span class="p">,</span>
+                           <span class="n">corr_thold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                           <span class="n">display</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cat_num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;corr_selector::{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_drop</span><span class="p">))</span>
+
+<span class="c1"># essential selector (included: missing selector, unique selector, correlation selector)</span>
+<span class="n">to_drop</span> <span class="o">=</span> <span class="n">Fs</span><span class="o">.</span><span class="n">essential_drop</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">indexCol</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="n">labelCol</span><span class="p">,</span>
+                            <span class="n">missing_thold</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">corr_thold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                            <span class="n">display</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cat_num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;essential_drop::{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_drop</span><span class="p">))</span>
+
+<span class="c1"># ensemble selector (ensemble selector is based on essential selector.)</span>
+<span class="n">to_drop</span> <span class="o">=</span> <span class="n">Fs</span><span class="o">.</span><span class="n">ensemble_drop</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">indexCol</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="n">labelCol</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;ensemble_drop::{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_drop</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>   SK_ID_CURR  TARGET  ... AMT_REQ_CREDIT_BUREAU_QRT AMT_REQ_CREDIT_BUREAU_YEAR
+<span class="m">0</span>      <span class="m">247408</span>       <span class="m">0</span>  ...                       <span class="m">0</span>.0                        <span class="m">1</span>.0
+<span class="m">1</span>      <span class="m">153916</span>       <span class="m">0</span>  ...                       <span class="m">0</span>.0                        <span class="m">0</span>.0
+<span class="m">2</span>      <span class="m">229065</span>       <span class="m">0</span>  ...                       <span class="m">0</span>.0                        <span class="m">7</span>.0
+<span class="m">3</span>      <span class="m">282013</span>       <span class="m">0</span>  ...                       <span class="m">0</span>.0                        <span class="m">1</span>.0
+<span class="m">4</span>      <span class="m">142266</span>       <span class="m">0</span>  ...                       <span class="m">1</span>.0                        <span class="m">1</span>.0
+
+<span class="o">[</span><span class="m">5</span> rows x <span class="m">122</span> columns<span class="o">]</span>
+</pre></div>
+</div>
+<p>and</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="_images/results21.png" src="_images/results21.png" />
+</div>
+<div class="figure align-center">
+<img alt="_images/results22.png" src="_images/results22.png" />
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reference.html" class="btn btn-neutral float-right" title="5. Main Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="auto_feature.html" class="btn btn-neutral float-left" title="3. AutoFeatures Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Wenqiang Feng
+      <span class="lastupdated">
+        Last updated on Jun 23, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
