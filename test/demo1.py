@@ -19,8 +19,14 @@ df = spark.createDataFrame(my_list, schema=col_name)
 
 from AutoFeatures import AutoFeatures
 
-Fs = AutoFeatures()
+df.show()
 
-to_drop = Fs.to_drop(df, missing_thold=0.68, corr_thold=0.9, method="pearson", rotation=True,
-                     display=True, tracking=True, cat_num=2)
-print(to_drop)
+Fs = AutoFeatures()
+indexCol = []
+labelCol = []
+
+to_drop = Fs.essential_drop(df, index_col=indexCol, label_col=labelCol, missing_thold=0.68, corr_thold=0.9,
+                    method="pearson", rotation=True, display=True, tracking=True, cat_num=2)
+
+print('essential dropped features:{}'.format(to_drop))
+

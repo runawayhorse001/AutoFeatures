@@ -13,12 +13,12 @@ except IOError:
     requirements = []
 
 setup(name='AutoFeatures',
-	    install_requires=requirements,
+      install_requires=requirements,
       version='1.0.0',
       description='PySpark Auto Feature Selector',
       author='Wenqiang Feng',
       author_email='von198@gmail.com',
-      url='https://github.com/runawayhorse001/AutoFeatures.git,
+      url='https://github.com/runawayhorse001/AutoFeatures.git',
       packages=find_packages(),
       long_description=long_description,
       long_description_content_type="text/markdown",

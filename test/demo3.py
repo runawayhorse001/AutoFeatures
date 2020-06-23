@@ -19,12 +19,12 @@ data = spark.read.csv(path='../data/credit_example.csv',
                       sep=',', encoding='UTF-8', comment=None, header=True, inferSchema=True)
 data = data.fillna(0)
 
-print(data.toPandas().head(5))
+data.show(5)
 
 indexCol = 'SK_ID_CURR'
-labelCol = 'TARGET'
+labelCol = 'AMT_INCOME_TOTAL'
 
-task = 'classification'
+task = 'regression'
 
 Fs = AutoFeatures()
 
@@ -32,14 +32,18 @@ Fs = AutoFeatures()
 to_drop = Fs.corr_selector(data, index_col=indexCol, label_col=labelCol,
                            corr_thold=0.9, method="pearson", rotation=True,
                            display=False, tracking=False, cat_num=2)
-print('corr_selector::{}'.format(to_drop))
+print('corr_selector:')
+print(to_drop)
 
-# essential selector (included: missing selector, unique selector, correlation selector)
+# essential selectors (included: missing selector, unique selector, correlation selector)
 to_drop = Fs.essential_drop(data, index_col=indexCol, label_col=labelCol,
                             missing_thold=0.68, corr_thold=0.9, method="pearson", rotation=True,
                             display=True, tracking=True, cat_num=2)
-print('essential_drop::{}'.format(to_drop))
+print('essential_drop:')
+print(to_drop)
 
-# ensemble selector (ensemble selector is based on essential selector.)
-to_drop = Fs.ensemble_drop(data, index_col=indexCol, label_col=labelCol, task=task, tracking=True)
-print('ensemble_drop::{}'.format(to_drop))
+# ensemble selectors
+
+to_drop = Fs.ensemble_drop(data, index_col=indexCol, label_col=labelCol, task=task)
+print('ensemble_drop:')
+print(to_drop)

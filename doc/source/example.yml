@@ -1,0 +1,58 @@
+definitions:
+  Identity:
+    type: integer
+    format: int64
+    minimum: 1
+
+  Common:
+    properties:
+      id:
+        $ref: '#/definitions/Identity'
+      created_at:
+        type: dateTime
+
+  User:
+    allOf:
+      - $ref: '#/definitions/Common'
+        properties:
+          name:
+            type: nvarchar
+            maxLength: 255
+
+  Role:
+    allOf:
+      - $ref: '#/definitions/Common'
+        properties:
+          name:
+            type: nvarchar
+            maxLength: 255
+
+  UserRole:
+    allOf:
+      - $ref: '#/definitions/Common'
+        properties:
+          user_id:
+            $ref: '#/definitions/Identity'
+          role_id:
+            $ref: '#/definitions/Identity'
+
+tables:
+  User:
+    name: users
+    description: Table to stores user information.
+    columns:
+      $ref: '#/definitions/User'
+  Role:
+    name: roles
+    description: Table to stores roles information.
+    columns:
+      $ref: '#/definitions/Role'
+  UserRole:
+    name: users_roles
+    description: Table to stores roles of user.
+    columns:
+      $ref: '#/definitions/UserRole'
+
+relationships:
+  - User ||--0< UserRole
+  - UserRole >|--|| Role

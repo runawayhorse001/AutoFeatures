@@ -1,6 +1,6 @@
-# PySparkAudit: PySpark Auto Feature Selector
+# AutoFeatures: PySpark Auto Feature Selector
 
-This is our PySpark ySpark Auto Feature Selector library repositories.
+This is our PySpark Auto Feature Selector library repositories.
 The ``API`` can be found at:  .
 If you want to install it, you can
 
