@@ -1,0 +1,528 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. AutoFeatures Class &mdash; AutoFeatures: PySpark Auto Feature Selector 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. AutoFeatures Demos" href="demo.html" />
+    <link rel="prev" title="2. How to Install" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> AutoFeatures: PySpark Auto Feature Selector
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">1. Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">2. How to Install</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. AutoFeatures Class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#utils-functions">3.1. Utils Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-types">3.1.1. Data types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">3.2. AutoFeatures Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html">4. AutoFeatures Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">5. Main Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AutoFeatures: PySpark Auto Feature Selector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>3. AutoFeatures Class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/auto_feature.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="autofeatures-class">
+<span id="form-frame"></span><h1>3. AutoFeatures Class<a class="headerlink" href="#autofeatures-class" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="utils-functions">
+<h2>3.1. Utils Functions<a class="headerlink" href="#utils-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="data-types">
+<h3>3.1.1. Data types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="AutoFeatures.AutoFeatures">
+<em class="property">class </em><code class="sig-prename descclassname">AutoFeatures.</code><code class="sig-name descname">AutoFeatures</code><a class="headerlink" href="#AutoFeatures.AutoFeatures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Auto feature selector for Machine Learning Modeling with PySpark. This class has four selectors:</p>
+<ol class="arabic simple">
+<li><p>unique selector: identify the single unique features</p></li>
+<li><p>missing selector: identify missing values features with missing threshold</p></li>
+<li><p>collinear selector: identify collinear features with threshold</p></li>
+<li><p>low importance selector: identify low importance features with Gradient Boosting Machine(GBM)</p></li>
+</ol>
+<dl class="method">
+<dt id="AutoFeatures.AutoFeatures.dtypes_class">
+<em class="property">classmethod </em><code class="sig-name descname">dtypes_class</code><span class="sig-paren">(</span><em class="sig-param">df_in</em><span class="sig-paren">)</span><a class="headerlink" href="#AutoFeatures.AutoFeatures.dtypes_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the data type categories: numerical, categorical, date and unsupported category.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df_in</strong> – the input rdd data frame</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>data type categories</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([</span>
+<span class="go">                    (&#39;Joe&#39;, 67, &#39;F&#39;, 7000, &#39;asymptomatic&#39;, 286.1, &#39;2019-6-28&#39;),</span>
+<span class="go">                    (&#39;Henry&#39;, 67, &#39;M&#39;, 8000, &#39;asymptomatic&#39;, 229.2, &#39;2019-6-29&#39;),</span>
+<span class="go">                    (&#39;Sam&#39;, 37,  &#39;F&#39;, 6000, &#39;nonanginal&#39;, 250.3, &#39;2019-6-30&#39;),</span>
+<span class="go">                    (&#39;Max&#39;, 56, &#39;M&#39;, 9000, &#39;nontypical&#39;, 236.4, &#39;2019-5-28&#39;),</span>
+<span class="go">                    (&#39;Mat&#39;, 56, &#39;F&#39;, 9000, &#39;asymptomatic&#39;, 254.5, &#39;2019-4-28&#39;)],</span>
+<span class="go">                    [&#39;Name&#39;, &#39;Age&#39;, &#39;Sex&#39;, &#39;Salary&#39;, &#39;ChestPain&#39;, &#39;Chol&#39;, &#39;CreatDate&#39;]</span>
+<span class="go">                   )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;CreatDate&#39;</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;CreatDate&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="k">import</span> <span class="n">dtypes_class</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dtypes_class</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">(     feature       DataType</span>
+<span class="go">0       Name     StringType</span>
+<span class="go">1        Age       LongType</span>
+<span class="go">2        Sex     StringType</span>
+<span class="go">3    Salary       LongType</span>
+<span class="go">4  ChestPain     StringType</span>
+<span class="go">5       Chol     DoubleType</span>
+<span class="go">6  CreatDate  TimestampType,</span>
+<span class="go">[&#39;Age&#39;, &#39;Salary&#39;, &#39;Chol&#39;],</span>
+<span class="go">[&#39;Name&#39;, &#39;Sex&#39;, &#39;ChestPain&#39;],</span>
+<span class="go">[&#39;CreatDate&#39;], [])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="AutoFeatures.AutoFeatures.get_dummy">
+<em class="property">classmethod </em><code class="sig-name descname">get_dummy</code><span class="sig-paren">(</span><em class="sig-param">df_in</em>, <em class="sig-param">index_col=None</em>, <em class="sig-param">categorical_cols=None</em>, <em class="sig-param">continuous_cols=None</em>, <em class="sig-param">label_col=None</em>, <em class="sig-param">dropLast=False</em><span class="sig-paren">)</span><a class="headerlink" href="#AutoFeatures.AutoFeatures.get_dummy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get dummy variables and concat with continuous variables for ml modeling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_in</strong> – the dataframe</p></li>
+<li><p><strong>categorical_cols</strong> – the name list of the categorical data</p></li>
+<li><p><strong>continuous_cols</strong> – the name list of the numerical data</p></li>
+<li><p><strong>label_col</strong> – the name of label column</p></li>
+<li><p><strong>dropLast</strong> – the flag of drop last column</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>feature matrix</p>
+</dd>
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Wenqiang Feng</p>
+</dd>
+<dt class="field-even">Email</dt>
+<dd class="field-even"><p><a class="reference external" href="mailto:von198&#37;&#52;&#48;gmail&#46;com">von198<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([</span>
+<span class="go">              (0, &quot;a&quot;),</span>
+<span class="go">              (1, &quot;b&quot;),</span>
+<span class="go">              (2, &quot;c&quot;),</span>
+<span class="go">              (3, &quot;a&quot;),</span>
+<span class="go">              (4, &quot;a&quot;),</span>
+<span class="go">              (5, &quot;c&quot;)</span>
+<span class="go">          ], [&quot;id&quot;, &quot;category&quot;])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">index_col</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">categorical_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">continuous_cols</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">label_col</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mat</span> <span class="o">=</span> <span class="n">get_dummy</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">index_col</span><span class="p">,</span><span class="n">categorical_cols</span><span class="p">,</span><span class="n">continuous_cols</span><span class="p">,</span><span class="n">label_col</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mat</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;</span>
+<span class="go">    +---+-------------+</span>
+<span class="go">    | id|     features|</span>
+<span class="go">    +---+-------------+</span>
+<span class="go">    |  0|[1.0,0.0,0.0]|</span>
+<span class="go">    |  1|[0.0,0.0,1.0]|</span>
+<span class="go">    |  2|[0.0,1.0,0.0]|</span>
+<span class="go">    |  3|[1.0,0.0,0.0]|</span>
+<span class="go">    |  4|[1.0,0.0,0.0]|</span>
+<span class="go">    |  5|[0.0,1.0,0.0]|</span>
+<span class="go">    +---+-------------+</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="AutoFeatures.AutoFeatures.get_encoded_names">
+<em class="property">classmethod </em><code class="sig-name descname">get_encoded_names</code><span class="sig-paren">(</span><em class="sig-param">df_in</em>, <em class="sig-param">categorical_cols</em><span class="sig-paren">)</span><a class="headerlink" href="#AutoFeatures.AutoFeatures.get_encoded_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the encoded dummy variable names</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_in</strong> – the input dataframe</p></li>
+<li><p><strong>categorical_cols</strong> – the name list of the categorical columns</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the name list of the encoded dummy variable for categorical columns</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="id1">
+<h2>3.2. AutoFeatures Class<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">AutoFeatures.</code><code class="sig-name descname">AutoFeatures</code></dt>
+<dd><p>Auto feature selector for Machine Learning Modeling with PySpark. This class has four selectors:</p>
+<ol class="arabic simple">
+<li><p>unique selector: identify the single unique features</p></li>
+<li><p>missing selector: identify missing values features with missing threshold</p></li>
+<li><p>collinear selector: identify collinear features with threshold</p></li>
+<li><p>low importance selector: identify low importance features with Gradient Boosting Machine(GBM)</p></li>
+</ol>
+<dl class="method">
+<dt id="AutoFeatures.AutoFeatures.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AutoFeatures.AutoFeatures.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="AutoFeatures.AutoFeatures.corr_selector">
+<em class="property">classmethod </em><code class="sig-name descname">corr_selector</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">index_col=None</em>, <em class="sig-param">label_col=None</em>, <em class="sig-param">corr_thold=0.9</em>, <em class="sig-param">method='pearson'</em>, <em class="sig-param">rotation=True</em>, <em class="sig-param">display=False</em>, <em class="sig-param">tracking=False</em>, <em class="sig-param">cat_num=2</em><span class="sig-paren">)</span><a class="headerlink" href="#AutoFeatures.AutoFeatures.corr_selector" title="Permalink to this definition">¶</a></dt>
+<dd><p>collinear selector: identify collinear features with threshold</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – input dataframe</p></li>
+<li><p><strong>index_col</strong> – the name of the index column</p></li>
+<li><p><strong>label_col</strong> – the name of the label column</p></li>
+<li><p><strong>corr_thold</strong> – threshold for collinear scores</p></li>
+<li><p><strong>method</strong> – the method to use for computing correlation, supported: pearson (default), spearman</p></li>
+<li><p><strong>rotation</strong> – the flag of rotate x-ticks</p></li>
+<li><p><strong>display</strong> – the flag for displaying plots, the default value is False</p></li>
+<li><p><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</p></li>
+<li><p><strong>cat_num</strong> – the number of the categorical feature (helping removing binary features)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The name list of the correlated values features above threshold</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="AutoFeatures.AutoFeatures.ensemble_drop">
+<em class="property">classmethod </em><code class="sig-name descname">ensemble_drop</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">index_col</em>, <em class="sig-param">label_col</em>, <em class="sig-param">task</em>, <em class="sig-param">importance_thold=None</em>, <em class="sig-param">cumulative_thold=0.96</em>, <em class="sig-param">missing_thold=0.6</em>, <em class="sig-param">corr_thold=0.9</em>, <em class="sig-param">method='pearson'</em>, <em class="sig-param">rotation=True</em>, <em class="sig-param">n_train=5</em>, <em class="sig-param">top_n=20</em>, <em class="sig-param">dropLast=False</em>, <em class="sig-param">display=False</em>, <em class="sig-param">tracking=False</em>, <em class="sig-param">cat_num=2</em><span class="sig-paren">)</span><a class="headerlink" href="#AutoFeatures.AutoFeatures.ensemble_drop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensemble drop (based on essential drop, that is to say it has included the functionals of essential drop) is a
+method to identify the essential drop features based on ensemble ML model (GBM).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – input dataframe</p></li>
+<li><p><strong>index_col</strong> – the name of the index column</p></li>
+<li><p><strong>label_col</strong> – the name of the label column</p></li>
+<li><p><strong>task</strong> – the ensemble model type, supported task “classification” or “regression”</p></li>
+<li><p><strong>importance_thold</strong> – the threshold of the feature importance if missing will be auto calculated by the
+cumulative threshold</p></li>
+<li><p><strong>cumulative_thold</strong> – the threshold of the cumulative feature importance, this will be used to determine
+the importance_thold when importance_thold is missing</p></li>
+<li><p><strong>missing_thold</strong> – threshold for missing values percentage</p></li>
+<li><p><strong>corr_thold</strong> – threshold for collinear scores</p></li>
+<li><p><strong>method</strong> – the method to use for computing correlation, supported: pearson (default), spearman</p></li>
+<li><p><strong>rotation</strong> – the flag of rotate x-ticks</p></li>
+<li><p><strong>n_train</strong> – the numbers of train for average the feature importance</p></li>
+<li><p><strong>top_n</strong> – the numbers for plot top_n highest feature importance</p></li>
+<li><p><strong>dropLast</strong> – the flag of the drop last column during applying the OneHotEncoder</p></li>
+<li><p><strong>display</strong> – the flag for displaying plots, the default value is False</p></li>
+<li><p><strong>tracking</strong> – the number of the categorical feature (helping removing binary features)</p></li>
+<li><p><strong>cat_num</strong> – the number of the categorical feature (helping removing binary features)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The name list of the to_drop features with low feature importance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="AutoFeatures.AutoFeatures.essential_drop">
+<em class="property">classmethod </em><code class="sig-name descname">essential_drop</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">index_col</em>, <em class="sig-param">label_col</em>, <em class="sig-param">missing_thold=0.6</em>, <em class="sig-param">corr_thold=0.9</em>, <em class="sig-param">method='pearson'</em>, <em class="sig-param">rotation=True</em>, <em class="sig-param">display=False</em>, <em class="sig-param">tracking=False</em>, <em class="sig-param">cat_num=2</em><span class="sig-paren">)</span><a class="headerlink" href="#AutoFeatures.AutoFeatures.essential_drop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Essential drop (included: missing selector, unique selector, correlation selector) is all in one functions
+to identify the essential drop features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – input dataframe</p></li>
+<li><p><strong>index_col</strong> – the name of the index column</p></li>
+<li><p><strong>label_col</strong> – the name of the label column</p></li>
+<li><p><strong>missing_thold</strong> – threshold for missing values percentage</p></li>
+<li><p><strong>corr_thold</strong> – threshold for collinear scores</p></li>
+<li><p><strong>method</strong> – the method to use for computing correlation, supported: pearson (default), spearman</p></li>
+<li><p><strong>rotation</strong> – the flag of rotate x-ticks</p></li>
+<li><p><strong>display</strong> – the flag for displaying plots, the default value is False</p></li>
+<li><p><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</p></li>
+<li><p><strong>cat_num</strong> – the number of the categorical feature (helping removing binary features)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The name list of the to_drop features with essential  drop functions</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="AutoFeatures.AutoFeatures.importance_selector">
+<em class="property">classmethod </em><code class="sig-name descname">importance_selector</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">index_col</em>, <em class="sig-param">label_col</em>, <em class="sig-param">task</em>, <em class="sig-param">importance_thold=None</em>, <em class="sig-param">cumulative_thold=0.96</em>, <em class="sig-param">missing_thold=0.6</em>, <em class="sig-param">corr_thold=0.9</em>, <em class="sig-param">method='pearson'</em>, <em class="sig-param">rotation=True</em>, <em class="sig-param">n_train=5</em>, <em class="sig-param">top_n=20</em>, <em class="sig-param">dropLast=False</em>, <em class="sig-param">display=False</em>, <em class="sig-param">tracking=False</em>, <em class="sig-param">cat_num=2</em><span class="sig-paren">)</span><a class="headerlink" href="#AutoFeatures.AutoFeatures.importance_selector" title="Permalink to this definition">¶</a></dt>
+<dd><p>importance selector: identify low feature importance features with threshold</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – input dataframe</p></li>
+<li><p><strong>index_col</strong> – the name of the index column</p></li>
+<li><p><strong>label_col</strong> – the name of the label column</p></li>
+<li><p><strong>task</strong> – the ensemble model type, supported task “classification” or “regression”</p></li>
+<li><p><strong>importance_thold</strong> – the threshold of the feature importance if missing will be auto calculated by the
+cumulative threshold</p></li>
+<li><p><strong>cumulative_thold</strong> – the threshold of the cumulative feature importance, this will be used to determine
+the importance_thold when importance_thold is missing</p></li>
+<li><p><strong>missing_thold</strong> – threshold for missing values percentage</p></li>
+<li><p><strong>corr_thold</strong> – threshold for collinear scores</p></li>
+<li><p><strong>method</strong> – the method to use for computing correlation, supported: pearson (default), spearman</p></li>
+<li><p><strong>rotation</strong> – the flag of rotate x-ticks</p></li>
+<li><p><strong>n_train</strong> – the numbers of train for average the feature importance</p></li>
+<li><p><strong>top_n</strong> – the numbers for plot top_n highest feature importance</p></li>
+<li><p><strong>dropLast</strong> – the flag of the drop last column during applying the OneHotEncoder</p></li>
+<li><p><strong>display</strong> – the flag for displaying plots, the default value is False</p></li>
+<li><p><strong>tracking</strong> – the number of the categorical feature (helping removing binary features)</p></li>
+<li><p><strong>cat_num</strong> – the number of the categorical feature (helping removing binary features)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The name list of the dropped features with low feature importance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="AutoFeatures.AutoFeatures.missing_selector">
+<em class="property">classmethod </em><code class="sig-name descname">missing_selector</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">missing_thold=0.6</em>, <em class="sig-param">display=False</em>, <em class="sig-param">tracking=False</em><span class="sig-paren">)</span><a class="headerlink" href="#AutoFeatures.AutoFeatures.missing_selector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing selector: identify missing values features with missing threshold</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – input dataframe</p></li>
+<li><p><strong>missing_thold</strong> – threshold for missing values percentage</p></li>
+<li><p><strong>display</strong> – the flag for displaying plots, the default value is False</p></li>
+<li><p><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The name list of the missing values features above missing threshold</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="AutoFeatures.AutoFeatures.unique_selector">
+<em class="property">classmethod </em><code class="sig-name descname">unique_selector</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">tracking=False</em><span class="sig-paren">)</span><a class="headerlink" href="#AutoFeatures.AutoFeatures.unique_selector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unique selector: identify the single unique features</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – input dataframe</p></li>
+<li><p><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return unique_drop</dt>
+<dd class="field-even"><p>The name list of the single unique features</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="demo.html" class="btn btn-neutral float-right" title="4. AutoFeatures Demos" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="install.html" class="btn btn-neutral float-left" title="2. How to Install" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Wenqiang Feng
+      <span class="lastupdated">
+        Last updated on Jun 23, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
