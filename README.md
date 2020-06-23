@@ -1,6 +1,8 @@
 # AutoFeatures: PySpark Auto Feature Selector
 
-This is our PySpark Auto Feature Selector library repositories.
+This is our PySpark Auto Feature Selector library repositories. The site has published 
+at https://runawayhorse001.github.io/AutoFeatures/
+
 The ``API`` can be found at:  .
 If you want to install it, you can
 
