@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from pandas.core.common import flatten
 
 import pyspark.sql.functions as F
 from pyspark.mllib.stat import Statistics
@@ -158,13 +159,15 @@ class AutoFeatures:
         """
 
         # exclude index col and label col
+        excluded = list(flatten([index_col, label_col]))
+
         if continuous_cols:
-            continuous_cols = [col for col in continuous_cols if col not in [index_col, label_col]]
+            continuous_cols = [col for col in continuous_cols if col not in excluded]
         else:
             continuous_cols = []
 
         if categorical_cols:
-            categorical_cols = [col for col in categorical_cols if col not in [index_col, label_col]]
+            categorical_cols = [col for col in categorical_cols if col not in excluded]
         else:
             categorical_cols = []
 
@@ -189,14 +192,14 @@ class AutoFeatures:
         if index_col and label_col:
             # for supervised learning
             data = data.withColumn('label', F.col(label_col))
-            out_data = data.select(index_col, 'features', 'label')
+            out_data = data.select(*list(flatten([index_col, 'features', 'label'])))
         elif not index_col and label_col:
             # for supervised learning
             data = data.withColumn('label', F.col(label_col))
             out_data = data.select('features', 'label')
         elif index_col and not label_col:
             # for unsupervised learning
-            out_data = data.select(index_col, 'features')
+            out_data = data.select(*list(flatten([index_col, 'features'])))
         elif not index_col and not label_col:
             # for unsupervised learning
             out_data = data.select('features')
@@ -271,7 +274,7 @@ class AutoFeatures:
         collinear selector: identify collinear features with threshold
 
         :param data: input dataframe
-        :param index_col: the name of the index column
+        :param index_col: the name of the index column and the other columns you want to exclude
         :param label_col: the name of the label column
         :param corr_thold: threshold for collinear scores
         :param method: the method to use for computing correlation, supported: pearson (default), spearman
@@ -295,17 +298,22 @@ class AutoFeatures:
 
         # exclude binary, index and label cols
         if flag or index_col or label_col:
-            excluded = list(dict.fromkeys(flag + [index_col] + [label_col]))
+            if not isinstance(index_col, list):
+                index_col = [index_col]
+            excluded = list(dict.fromkeys(flag + index_col + [label_col]))
         else:
             excluded = []
 
         num_cols = [col for col in num_fields if col not in excluded]
 
         if len(num_cols) > 1:
-            df_in = data.select(num_cols).na.drop()
+            data = data.select(num_cols).na.drop()
         else:
             print("Only has one numerical feature!!! Don't need correlation selector.")
             exit(0)
+
+        # fill nan with 0
+        df_in = data.fillna(0)
 
         # convert the rdd data data frame to dense matrix
         col_names = df_in.columns
@@ -350,7 +358,7 @@ class AutoFeatures:
         importance selector: identify low feature importance features with threshold
 
         :param data: input dataframe
-        :param index_col: the name of the index column
+        :param index_col: the name of the index column and the other columns you want to exclude
         :param label_col: the name of the label column
         :param task: the ensemble model type, supported task "classification" or "regression"
         :param importance_thold: the threshold of the feature importance if missing will be auto calculated by the
@@ -478,7 +486,7 @@ class AutoFeatures:
         to identify the essential drop features.
 
         :param data: input dataframe
-        :param index_col: the name of the index column
+        :param index_col: the name of the index column and the other columns you want to exclude
         :param label_col: the name of the label column
         :param missing_thold: threshold for missing values percentage
         :param corr_thold: threshold for collinear scores
@@ -517,7 +525,7 @@ class AutoFeatures:
         method to identify the essential drop features based on ensemble ML model (GBM).
 
         :param data: input dataframe
-        :param index_col: the name of the index column
+        :param index_col: the name of the index column and the other columns you want to exclude
         :param label_col: the name of the label column
         :param task: the ensemble model type, supported task "classification" or "regression"
         :param importance_thold:  the threshold of the feature importance if missing will be auto calculated by the
@@ -562,19 +570,19 @@ if __name__ == '__main__':
         .config("spark.some.config.option", "some-value") \
         .getOrCreate()
 
-    my_list = [('a', 'f', 2, 3, 1, None, 0),
-               ('b', 'm', 5, 4, 1, None, 1),
-               ('c', 'm', 8, 9, 1, None, 0),
-               ('d', 'f', 2, 3, 1, None, 1),
-               ('e', 'm', 5, 5, 1, 4, 0),
-               ('f', 'm', 8, 9, 1, 4, 1)]
-    col_name = ['col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7']
+    my_list = [('a', '1', 'f', 2, 3, 1, None, 0),
+               ('b', '2', 'm', 5, 4, 1, None, 1),
+               ('c', '3', 'm', 8, 9, 1, None, 0),
+               ('d', '4', 'f', 2, 3, 1, None, 1),
+               ('e', '5', 'm', 5, 5, 1, 4, 0),
+               ('f', '6', 'm', 8, 9, 1, 4, 1)]
+    col_name = ['col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7', 'col8']
 
     df = spark.createDataFrame(my_list, schema=col_name)
 
     df.show()
 
-    indexCol = 'col1'
+    indexCol = ['col1', 'col3']
     labelCol = 'col7'  #
     categoricalCols = ['col2']
     task = 'classification'

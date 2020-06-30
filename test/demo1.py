@@ -1,4 +1,7 @@
 # simple test
+from AutoFeatures import AutoFeatures
+
+
 from pyspark.sql import SparkSession
 
 spark = SparkSession \
@@ -17,7 +20,7 @@ col_name = ['col1', 'col2', 'col3']
 
 df = spark.createDataFrame(my_list, schema=col_name)
 
-from AutoFeatures import AutoFeatures
+
 
 df.show()
 

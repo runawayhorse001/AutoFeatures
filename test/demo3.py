@@ -21,7 +21,7 @@ data = data.fillna(0)
 
 print(data.toPandas().head(5))
 
-indexCol = 'SK_ID_CURR'
+indexCol = ['SK_ID_CURR', 'CODE_GENDER']
 labelCol = 'AMT_INCOME_TOTAL'
 
 task = 'regression'

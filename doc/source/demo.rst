@@ -50,6 +50,8 @@ AutoFeatures Essential Drop
 AutoFeatures  Ensemble Drop
 +++++++++++++++++++++++++++
 
+Classification
+--------------
 |eg|
 
 .. literalinclude:: ../../test/demo2.py
@@ -77,3 +79,9 @@ and
 
   .. figure:: images/results22.png
     :align: center    
+
+
+------------
+
+.. literalinclude:: ../../test/demo3.py
+     :language: python
