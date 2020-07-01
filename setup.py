@@ -14,7 +14,7 @@ except IOError:
 
 setup(name='AutoFeatures',
       install_requires=requirements,
-      version='1.0.1',
+      version='1.0.2',
       description='PySpark Auto Feature Selector',
       author='Wenqiang Feng',
       author_email='von198@gmail.com',

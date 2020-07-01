@@ -123,7 +123,7 @@ class AutoFeatures:
         :param continuous_cols:  the name list of the numerical data
         :param label_col:  the name of label column
         :param dropLast:  the flag of drop last column
-        :return: feature matrix
+        :return: encoded dummy variable names and feature matrix
 
         :author: Wenqiang Feng
         :email:  von198@gmail.com
@@ -426,7 +426,10 @@ class AutoFeatures:
         feature_importances = pd.DataFrame(d).sort_values('avg_importance', ascending=False)
         feature_importances['cumulative_importance'] = feature_importances['avg_importance'].cumsum()
 
+        # set a flag to record whether we need plot cumulative importance
+        plt_flag = False
         if not importance_thold:
+            plt_flag = True # if we use the cumulative importance to determine the importance, we will plot
             importance_thold = feature_importances['avg_importance'][np.max(np.where(
                                          feature_importances['cumulative_importance'] < cumulative_thold))]
 
@@ -455,15 +458,15 @@ class AutoFeatures:
             print('All importance selector took = ' + str(end - start) + ' s')
 
         if display:
-            if not importance_thold:
+            if plt_flag:
                 # plot the threshold of the cumulative importance
                 plt.figure(figsize=(10, 8))
                 ax = sns.lineplot(x=range(1, len(feature_importances) + 1), y="cumulative_importance",
                                   data=feature_importances, color='blue')
 
-                cat_point = np.max(np.where(feature_importances['cumulative_importance'] < i_thre))
+                cat_point = np.max(np.where(feature_importances['cumulative_importance'] < cumulative_thold))
                 # plt.axhline(i_thre, ls='--')
-                plt.text(cat_point + 5, i_thre, (cat_point, i_thre), color='red')
+                plt.text(cat_point + 5, cumulative_thold, (cat_point, cumulative_thold), color='red')
                 plt.axvline(cat_point, color='red', linestyle='--')
                 plt.xlabel('Number of the features')
                 plt.show()
