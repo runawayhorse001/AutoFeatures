@@ -93,7 +93,10 @@
 <li class="toctree-l1"><a class="reference internal" href="auto_feature.html">3. AutoFeatures Class</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">4. AutoFeatures Demos</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#autofeatures-essential-drop">4.1. AutoFeatures Essential Drop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#autofeatures-ensemble-drop">4.2. AutoFeatures  Ensemble Drop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#autofeatures-ensemble-drop">4.2. AutoFeatures  Ensemble Drop</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#classification">4.2.1. Classification</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">5. Main Reference</a></li>
@@ -168,6 +171,9 @@
 <h2>4.1. AutoFeatures Essential Drop<a class="headerlink" href="#autofeatures-essential-drop" title="Permalink to this headline">¶</a></h2>
 <p>For example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simple test</span>
+<span class="kn">from</span> <span class="nn">AutoFeatures</span> <span class="kn">import</span> <span class="n">AutoFeatures</span>
+
+
 <span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
 
 <span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
@@ -186,7 +192,7 @@
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">col_name</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">AutoFeatures</span> <span class="kn">import</span> <span class="n">AutoFeatures</span>
+
 
 <span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
@@ -195,9 +201,9 @@
 <span class="n">labelCol</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="n">to_drop</span> <span class="o">=</span> <span class="n">Fs</span><span class="o">.</span><span class="n">essential_drop</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">indexCol</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="n">labelCol</span><span class="p">,</span> <span class="n">missing_thold</span><span class="o">=</span><span class="mf">0.68</span><span class="p">,</span> <span class="n">corr_thold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
-                            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cat_num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cat_num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;essential dropped features:{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_drop</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;essential dropped features:</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_drop</span><span class="p">))</span>
 
 </pre></div>
 </div>
@@ -229,6 +235,8 @@ essential dropped features:<span class="o">[</span><span class="s1">&#39;col3&#3
 </div>
 <div class="section" id="autofeatures-ensemble-drop">
 <h2>4.2. AutoFeatures  Ensemble Drop<a class="headerlink" href="#autofeatures-ensemble-drop" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classification">
+<h3>4.2.1. Classification<a class="headerlink" href="#classification" title="Permalink to this headline">¶</a></h3>
 <p>For example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
 
@@ -248,12 +256,12 @@ essential dropped features:<span class="o">[</span><span class="s1">&#39;col3&#3
 
 <span class="c1"># load dataset</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;../data/credit_example.csv&#39;</span><span class="p">,</span>
-                      <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                      <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">toPandas</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">toPandas</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 
-<span class="n">indexCol</span> <span class="o">=</span> <span class="s1">&#39;SK_ID_CURR&#39;</span>
+<span class="n">indexCol</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SK_ID_CURR&#39;</span><span class="p">]</span>
 <span class="n">labelCol</span> <span class="o">=</span> <span class="s1">&#39;TARGET&#39;</span>
 
 <span class="n">task</span> <span class="o">=</span> <span class="s1">&#39;classification&#39;</span>
@@ -262,19 +270,19 @@ essential dropped features:<span class="o">[</span><span class="s1">&#39;col3&#3
 
 <span class="c1"># correlation selector</span>
 <span class="n">to_drop</span> <span class="o">=</span> <span class="n">Fs</span><span class="o">.</span><span class="n">corr_selector</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">indexCol</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="n">labelCol</span><span class="p">,</span>
-                           <span class="n">corr_thold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                           <span class="n">display</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cat_num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;corr_selector::{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_drop</span><span class="p">))</span>
+                           <span class="n">corr_thold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                           <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cat_num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;corr_selector::</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_drop</span><span class="p">))</span>
 
 <span class="c1"># essential selector (included: missing selector, unique selector, correlation selector)</span>
 <span class="n">to_drop</span> <span class="o">=</span> <span class="n">Fs</span><span class="o">.</span><span class="n">essential_drop</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">indexCol</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="n">labelCol</span><span class="p">,</span>
-                            <span class="n">missing_thold</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">corr_thold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                            <span class="n">display</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cat_num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;essential_drop::{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_drop</span><span class="p">))</span>
+                            <span class="n">missing_thold</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">corr_thold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">display</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cat_num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;essential_drop::</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_drop</span><span class="p">))</span>
 
 <span class="c1"># ensemble selector (ensemble selector is based on essential selector.)</span>
-<span class="n">to_drop</span> <span class="o">=</span> <span class="n">Fs</span><span class="o">.</span><span class="n">ensemble_drop</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">indexCol</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="n">labelCol</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;ensemble_drop::{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_drop</span><span class="p">))</span>
+<span class="n">to_drop</span> <span class="o">=</span> <span class="n">Fs</span><span class="o">.</span><span class="n">ensemble_drop</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">indexCol</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="n">labelCol</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ensemble_drop::</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_drop</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Result:</p>
@@ -297,6 +305,53 @@ essential dropped features:<span class="o">[</span><span class="s1">&#39;col3&#3
 <img alt="_images/results22.png" src="_images/results22.png" />
 </div>
 </div></blockquote>
+<hr class="docutils" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="o">.</span><span class="n">builder</span> \
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Python Spark regression example&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.some.config.option&quot;</span><span class="p">,</span> <span class="s2">&quot;some-value&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+
+<span class="c1"># from PySparkAudit import dtypes_class, hist_plot, bar_plot, freq_items,feature_len</span>
+<span class="c1"># from PySparkAudit import dataset_summary, rates, trend_plot</span>
+
+<span class="c1"># path = &#39;/home/feng/Desktop&#39;</span>
+
+<span class="kn">from</span> <span class="nn">AutoFeatures</span> <span class="kn">import</span> <span class="n">AutoFeatures</span>
+
+<span class="c1"># load dataset</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;../data/credit_example.csv&#39;</span><span class="p">,</span>
+                      <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">toPandas</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">indexCol</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SK_ID_CURR&#39;</span><span class="p">,</span> <span class="s1">&#39;CODE_GENDER&#39;</span><span class="p">]</span>
+<span class="n">labelCol</span> <span class="o">=</span> <span class="s1">&#39;AMT_INCOME_TOTAL&#39;</span>
+
+<span class="n">task</span> <span class="o">=</span> <span class="s1">&#39;regression&#39;</span>
+
+<span class="n">Fs</span> <span class="o">=</span> <span class="n">AutoFeatures</span><span class="p">()</span>
+
+
+<span class="c1"># essential selectors (included: missing selector, unique selector, correlation selector)</span>
+<span class="n">to_drop</span> <span class="o">=</span> <span class="n">Fs</span><span class="o">.</span><span class="n">essential_drop</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">indexCol</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="n">labelCol</span><span class="p">,</span>
+                            <span class="n">missing_thold</span><span class="o">=</span><span class="mf">0.68</span><span class="p">,</span> <span class="n">corr_thold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">display</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cat_num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;essential_drop:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">to_drop</span><span class="p">)</span>
+
+<span class="c1"># ensemble selectors</span>
+
+<span class="n">to_drop</span> <span class="o">=</span> <span class="n">Fs</span><span class="o">.</span><span class="n">ensemble_drop</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">indexCol</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="n">labelCol</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ensemble_drop:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">to_drop</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -322,7 +377,7 @@ essential dropped features:<span class="o">[</span><span class="s1">&#39;col3&#3
     <p>
         &copy; Copyright 2020, Wenqiang Feng
       <span class="lastupdated">
-        Last updated on Jun 23, 2020.
+        Last updated on Jul 06, 2020.
       </span>
 
     </p>

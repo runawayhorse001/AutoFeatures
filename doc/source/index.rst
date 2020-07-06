@@ -6,7 +6,7 @@ AutoFeatures: PySpark Auto Feature Selector
     :align: center
 
 Welcome to our **AutoFeatures: PySpark Auto Feature Selector**!!! The PDF version
-can be downloaded from `HERE <./latex/AutoFeatures.pdf>`_.
+can be downloaded from `HERE <../latex/AutoFeatures.pdf>`_.
 
 ========
 Contents

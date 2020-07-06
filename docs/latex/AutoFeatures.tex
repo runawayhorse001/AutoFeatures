@@ -71,7 +71,7 @@
 
 
 \title{AutoFeatures: PySpark Auto Feature Selector}
-\date{June 23, 2020}
+\date{July 06, 2020}
 \release{1.0}
 \author{Wenqiang Feng}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -270,7 +270,7 @@ data type categories
 \PYG{g+go}{                    [\PYGZsq{}Name\PYGZsq{}, \PYGZsq{}Age\PYGZsq{}, \PYGZsq{}Sex\PYGZsq{}, \PYGZsq{}Salary\PYGZsq{}, \PYGZsq{}ChestPain\PYGZsq{}, \PYGZsq{}Chol\PYGZsq{}, \PYGZsq{}CreatDate\PYGZsq{}]}
 \PYG{g+go}{                   )}
 \PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{test} \PYG{o}{=} \PYG{n}{test}\PYG{o}{.}\PYG{n}{withColumn}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{CreatDate}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{F}\PYG{o}{.}\PYG{n}{col}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{CreatDate}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{o}{.}\PYG{n}{cast}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{timestamp}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{)}
-\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k}{import} \PYG{n}{dtypes\PYGZus{}class}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{dtypes\PYGZus{}class}
 \PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{dtypes\PYGZus{}class}\PYG{p}{(}\PYG{n}{test}\PYG{p}{)}
 \PYG{g+go}{(     feature       DataType}
 \PYG{g+go}{0       Name     StringType}
@@ -312,7 +312,7 @@ Get dummy variables and concat with continuous variables for ml modeling.
 \end{itemize}
 
 \item[{Returns}] \leavevmode
-feature matrix
+encoded dummy variable names and feature matrix
 
 \item[{Author}] \leavevmode
 Wenqiang Feng
@@ -430,7 +430,7 @@ collinear selector: identify collinear features with threshold
 \sphinxstyleliteralstrong{\sphinxupquote{data}} \textendash{} input dataframe
 
 \item {} 
-\sphinxstyleliteralstrong{\sphinxupquote{index\_col}} \textendash{} the name of the index column
+\sphinxstyleliteralstrong{\sphinxupquote{index\_col}} \textendash{} the name of the index column and the other columns you want to exclude
 
 \item {} 
 \sphinxstyleliteralstrong{\sphinxupquote{label\_col}} \textendash{} the name of the label column
@@ -474,7 +474,7 @@ method to identify the essential drop features based on ensemble ML model (GBM).
 \sphinxstyleliteralstrong{\sphinxupquote{data}} \textendash{} input dataframe
 
 \item {} 
-\sphinxstyleliteralstrong{\sphinxupquote{index\_col}} \textendash{} the name of the index column
+\sphinxstyleliteralstrong{\sphinxupquote{index\_col}} \textendash{} the name of the index column and the other columns you want to exclude
 
 \item {} 
 \sphinxstyleliteralstrong{\sphinxupquote{label\_col}} \textendash{} the name of the label column
@@ -541,7 +541,7 @@ to identify the essential drop features.
 \sphinxstyleliteralstrong{\sphinxupquote{data}} \textendash{} input dataframe
 
 \item {} 
-\sphinxstyleliteralstrong{\sphinxupquote{index\_col}} \textendash{} the name of the index column
+\sphinxstyleliteralstrong{\sphinxupquote{index\_col}} \textendash{} the name of the index column and the other columns you want to exclude
 
 \item {} 
 \sphinxstyleliteralstrong{\sphinxupquote{label\_col}} \textendash{} the name of the label column
@@ -587,7 +587,7 @@ importance selector: identify low feature importance features with threshold
 \sphinxstyleliteralstrong{\sphinxupquote{data}} \textendash{} input dataframe
 
 \item {} 
-\sphinxstyleliteralstrong{\sphinxupquote{index\_col}} \textendash{} the name of the index column
+\sphinxstyleliteralstrong{\sphinxupquote{index\_col}} \textendash{} the name of the index column and the other columns you want to exclude
 
 \item {} 
 \sphinxstyleliteralstrong{\sphinxupquote{label\_col}} \textendash{} the name of the label column
@@ -708,7 +708,10 @@ For example:
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYG{c+c1}{\PYGZsh{} simple test}
-\PYG{k+kn}{from} \PYG{n+nn}{pyspark.sql} \PYG{k+kn}{import} \PYG{n}{SparkSession}
+\PYG{k+kn}{from} \PYG{n+nn}{AutoFeatures} \PYG{k+kn}{import} \PYG{n}{AutoFeatures}
+
+
+\PYG{k+kn}{from} \PYG{n+nn}{pyspark}\PYG{n+nn}{.}\PYG{n+nn}{sql} \PYG{k+kn}{import} \PYG{n}{SparkSession}
 
 \PYG{n}{spark} \PYG{o}{=} \PYG{n}{SparkSession} \PYGZbs{}
     \PYG{o}{.}\PYG{n}{builder} \PYGZbs{}
@@ -726,7 +729,7 @@ For example:
 
 \PYG{n}{df} \PYG{o}{=} \PYG{n}{spark}\PYG{o}{.}\PYG{n}{createDataFrame}\PYG{p}{(}\PYG{n}{my\PYGZus{}list}\PYG{p}{,} \PYG{n}{schema}\PYG{o}{=}\PYG{n}{col\PYGZus{}name}\PYG{p}{)}
 
-\PYG{k+kn}{from} \PYG{n+nn}{AutoFeatures} \PYG{k+kn}{import} \PYG{n}{AutoFeatures}
+
 
 \PYG{n}{df}\PYG{o}{.}\PYG{n}{show}\PYG{p}{(}\PYG{p}{)}
 
@@ -735,9 +738,9 @@ For example:
 \PYG{n}{labelCol} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
 
 \PYG{n}{to\PYGZus{}drop} \PYG{o}{=} \PYG{n}{Fs}\PYG{o}{.}\PYG{n}{essential\PYGZus{}drop}\PYG{p}{(}\PYG{n}{df}\PYG{p}{,} \PYG{n}{index\PYGZus{}col}\PYG{o}{=}\PYG{n}{indexCol}\PYG{p}{,} \PYG{n}{label\PYGZus{}col}\PYG{o}{=}\PYG{n}{labelCol}\PYG{p}{,} \PYG{n}{missing\PYGZus{}thold}\PYG{o}{=}\PYG{l+m+mf}{0.68}\PYG{p}{,} \PYG{n}{corr\PYGZus{}thold}\PYG{o}{=}\PYG{l+m+mf}{0.9}\PYG{p}{,}
-                            \PYG{n}{method}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{pearson}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{rotation}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{display}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{tracking}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{cat\PYGZus{}num}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}
+                            \PYG{n}{method}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{pearson}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{rotation}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,} \PYG{n}{display}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,} \PYG{n}{tracking}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,} \PYG{n}{cat\PYGZus{}num}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}
 
-\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{essential dropped features:\PYGZob{}\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{to\PYGZus{}drop}\PYG{p}{)}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{essential dropped features:}\PYG{l+s+si}{\PYGZob{}\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{to\PYGZus{}drop}\PYG{p}{)}\PYG{p}{)}
 
 \end{sphinxVerbatim}
 
@@ -777,10 +780,13 @@ essential dropped features:\PYG{o}{[}\PYG{l+s+s1}{\PYGZsq{}col3\PYGZsq{}}\PYG{o}
 
 \subsection{AutoFeatures  Ensemble Drop}
 \label{\detokenize{demo:autofeatures-ensemble-drop}}
+
+\subsubsection{Classification}
+\label{\detokenize{demo:classification}}
 For example:
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{k+kn}{from} \PYG{n+nn}{pyspark.sql} \PYG{k+kn}{import} \PYG{n}{SparkSession}
+\PYG{k+kn}{from} \PYG{n+nn}{pyspark}\PYG{n+nn}{.}\PYG{n+nn}{sql} \PYG{k+kn}{import} \PYG{n}{SparkSession}
 
 \PYG{n}{spark} \PYG{o}{=} \PYG{n}{SparkSession} \PYGZbs{}
     \PYG{o}{.}\PYG{n}{builder} \PYGZbs{}
@@ -798,12 +804,12 @@ For example:
 
 \PYG{c+c1}{\PYGZsh{} load dataset}
 \PYG{n}{data} \PYG{o}{=} \PYG{n}{spark}\PYG{o}{.}\PYG{n}{read}\PYG{o}{.}\PYG{n}{csv}\PYG{p}{(}\PYG{n}{path}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{../data/credit\PYGZus{}example.csv}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}
-                      \PYG{n}{sep}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{encoding}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{UTF\PYGZhy{}8}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{comment}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{header}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{inferSchema}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+                      \PYG{n}{sep}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{encoding}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{UTF\PYGZhy{}8}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{comment}\PYG{o}{=}\PYG{k+kc}{None}\PYG{p}{,} \PYG{n}{header}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,} \PYG{n}{inferSchema}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
 \PYG{n}{data} \PYG{o}{=} \PYG{n}{data}\PYG{o}{.}\PYG{n}{fillna}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{)}
 
-\PYG{k}{print}\PYG{p}{(}\PYG{n}{data}\PYG{o}{.}\PYG{n}{toPandas}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{head}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{)}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{data}\PYG{o}{.}\PYG{n}{toPandas}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{head}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{)}\PYG{p}{)}
 
-\PYG{n}{indexCol} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{SK\PYGZus{}ID\PYGZus{}CURR}\PYG{l+s+s1}{\PYGZsq{}}
+\PYG{n}{indexCol} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{SK\PYGZus{}ID\PYGZus{}CURR}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
 \PYG{n}{labelCol} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{TARGET}\PYG{l+s+s1}{\PYGZsq{}}
 
 \PYG{n}{task} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{classification}\PYG{l+s+s1}{\PYGZsq{}}
@@ -812,19 +818,19 @@ For example:
 
 \PYG{c+c1}{\PYGZsh{} correlation selector}
 \PYG{n}{to\PYGZus{}drop} \PYG{o}{=} \PYG{n}{Fs}\PYG{o}{.}\PYG{n}{corr\PYGZus{}selector}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,} \PYG{n}{index\PYGZus{}col}\PYG{o}{=}\PYG{n}{indexCol}\PYG{p}{,} \PYG{n}{label\PYGZus{}col}\PYG{o}{=}\PYG{n}{labelCol}\PYG{p}{,}
-                           \PYG{n}{corr\PYGZus{}thold}\PYG{o}{=}\PYG{l+m+mf}{0.9}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{pearson}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{rotation}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,}
-                           \PYG{n}{display}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{,} \PYG{n}{tracking}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{,} \PYG{n}{cat\PYGZus{}num}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}
-\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{corr\PYGZus{}selector::\PYGZob{}\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{to\PYGZus{}drop}\PYG{p}{)}\PYG{p}{)}
+                           \PYG{n}{corr\PYGZus{}thold}\PYG{o}{=}\PYG{l+m+mf}{0.9}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{pearson}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{rotation}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,}
+                           \PYG{n}{display}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{,} \PYG{n}{tracking}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{,} \PYG{n}{cat\PYGZus{}num}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{corr\PYGZus{}selector::}\PYG{l+s+si}{\PYGZob{}\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{to\PYGZus{}drop}\PYG{p}{)}\PYG{p}{)}
 
 \PYG{c+c1}{\PYGZsh{} essential selector (included: missing selector, unique selector, correlation selector)}
 \PYG{n}{to\PYGZus{}drop} \PYG{o}{=} \PYG{n}{Fs}\PYG{o}{.}\PYG{n}{essential\PYGZus{}drop}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,} \PYG{n}{index\PYGZus{}col}\PYG{o}{=}\PYG{n}{indexCol}\PYG{p}{,} \PYG{n}{label\PYGZus{}col}\PYG{o}{=}\PYG{n}{labelCol}\PYG{p}{,}
-                            \PYG{n}{missing\PYGZus{}thold}\PYG{o}{=}\PYG{l+m+mf}{0.6}\PYG{p}{,} \PYG{n}{corr\PYGZus{}thold}\PYG{o}{=}\PYG{l+m+mf}{0.9}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{pearson}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{rotation}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,}
-                            \PYG{n}{display}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{tracking}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{cat\PYGZus{}num}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}
-\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{essential\PYGZus{}drop::\PYGZob{}\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{to\PYGZus{}drop}\PYG{p}{)}\PYG{p}{)}
+                            \PYG{n}{missing\PYGZus{}thold}\PYG{o}{=}\PYG{l+m+mf}{0.6}\PYG{p}{,} \PYG{n}{corr\PYGZus{}thold}\PYG{o}{=}\PYG{l+m+mf}{0.9}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{pearson}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{rotation}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,}
+                            \PYG{n}{display}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,} \PYG{n}{tracking}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,} \PYG{n}{cat\PYGZus{}num}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{essential\PYGZus{}drop::}\PYG{l+s+si}{\PYGZob{}\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{to\PYGZus{}drop}\PYG{p}{)}\PYG{p}{)}
 
 \PYG{c+c1}{\PYGZsh{} ensemble selector (ensemble selector is based on essential selector.)}
-\PYG{n}{to\PYGZus{}drop} \PYG{o}{=} \PYG{n}{Fs}\PYG{o}{.}\PYG{n}{ensemble\PYGZus{}drop}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,} \PYG{n}{index\PYGZus{}col}\PYG{o}{=}\PYG{n}{indexCol}\PYG{p}{,} \PYG{n}{label\PYGZus{}col}\PYG{o}{=}\PYG{n}{labelCol}\PYG{p}{,} \PYG{n}{task}\PYG{o}{=}\PYG{n}{task}\PYG{p}{,} \PYG{n}{tracking}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
-\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ensemble\PYGZus{}drop::\PYGZob{}\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{to\PYGZus{}drop}\PYG{p}{)}\PYG{p}{)}
+\PYG{n}{to\PYGZus{}drop} \PYG{o}{=} \PYG{n}{Fs}\PYG{o}{.}\PYG{n}{ensemble\PYGZus{}drop}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,} \PYG{n}{index\PYGZus{}col}\PYG{o}{=}\PYG{n}{indexCol}\PYG{p}{,} \PYG{n}{label\PYGZus{}col}\PYG{o}{=}\PYG{n}{labelCol}\PYG{p}{,} \PYG{n}{task}\PYG{o}{=}\PYG{n}{task}\PYG{p}{,} \PYG{n}{tracking}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ensemble\PYGZus{}drop::}\PYG{l+s+si}{\PYGZob{}\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{to\PYGZus{}drop}\PYG{p}{)}\PYG{p}{)}
 \end{sphinxVerbatim}
 
 Result:
@@ -855,6 +861,56 @@ and
 \noindent\sphinxincludegraphics{{results22}.png}
 \end{figure}
 \end{quote}
+
+
+\bigskip\hrule\bigskip
+
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{pyspark}\PYG{n+nn}{.}\PYG{n+nn}{sql} \PYG{k+kn}{import} \PYG{n}{SparkSession}
+
+\PYG{n}{spark} \PYG{o}{=} \PYG{n}{SparkSession} \PYGZbs{}
+    \PYG{o}{.}\PYG{n}{builder} \PYGZbs{}
+    \PYG{o}{.}\PYG{n}{appName}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Python Spark regression example}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)} \PYGZbs{}
+    \PYG{o}{.}\PYG{n}{config}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{spark.some.config.option}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{some\PYGZhy{}value}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)} \PYGZbs{}
+    \PYG{o}{.}\PYG{n}{getOrCreate}\PYG{p}{(}\PYG{p}{)}
+
+
+\PYG{c+c1}{\PYGZsh{} from PySparkAudit import dtypes\PYGZus{}class, hist\PYGZus{}plot, bar\PYGZus{}plot, freq\PYGZus{}items,feature\PYGZus{}len}
+\PYG{c+c1}{\PYGZsh{} from PySparkAudit import dataset\PYGZus{}summary, rates, trend\PYGZus{}plot}
+
+\PYG{c+c1}{\PYGZsh{} path = \PYGZsq{}/home/feng/Desktop\PYGZsq{}}
+
+\PYG{k+kn}{from} \PYG{n+nn}{AutoFeatures} \PYG{k+kn}{import} \PYG{n}{AutoFeatures}
+
+\PYG{c+c1}{\PYGZsh{} load dataset}
+\PYG{n}{data} \PYG{o}{=} \PYG{n}{spark}\PYG{o}{.}\PYG{n}{read}\PYG{o}{.}\PYG{n}{csv}\PYG{p}{(}\PYG{n}{path}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{../data/credit\PYGZus{}example.csv}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}
+                      \PYG{n}{sep}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{encoding}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{UTF\PYGZhy{}8}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{comment}\PYG{o}{=}\PYG{k+kc}{None}\PYG{p}{,} \PYG{n}{header}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,} \PYG{n}{inferSchema}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
+\PYG{n}{data} \PYG{o}{=} \PYG{n}{data}\PYG{o}{.}\PYG{n}{fillna}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{)}
+
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{data}\PYG{o}{.}\PYG{n}{toPandas}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{head}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{)}\PYG{p}{)}
+
+\PYG{n}{indexCol} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{SK\PYGZus{}ID\PYGZus{}CURR}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{CODE\PYGZus{}GENDER}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{]}
+\PYG{n}{labelCol} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{AMT\PYGZus{}INCOME\PYGZus{}TOTAL}\PYG{l+s+s1}{\PYGZsq{}}
+
+\PYG{n}{task} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{regression}\PYG{l+s+s1}{\PYGZsq{}}
+
+\PYG{n}{Fs} \PYG{o}{=} \PYG{n}{AutoFeatures}\PYG{p}{(}\PYG{p}{)}
+
+
+\PYG{c+c1}{\PYGZsh{} essential selectors (included: missing selector, unique selector, correlation selector)}
+\PYG{n}{to\PYGZus{}drop} \PYG{o}{=} \PYG{n}{Fs}\PYG{o}{.}\PYG{n}{essential\PYGZus{}drop}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,} \PYG{n}{index\PYGZus{}col}\PYG{o}{=}\PYG{n}{indexCol}\PYG{p}{,} \PYG{n}{label\PYGZus{}col}\PYG{o}{=}\PYG{n}{labelCol}\PYG{p}{,}
+                            \PYG{n}{missing\PYGZus{}thold}\PYG{o}{=}\PYG{l+m+mf}{0.68}\PYG{p}{,} \PYG{n}{corr\PYGZus{}thold}\PYG{o}{=}\PYG{l+m+mf}{0.9}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{pearson}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{rotation}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,}
+                            \PYG{n}{display}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,} \PYG{n}{tracking}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,} \PYG{n}{cat\PYGZus{}num}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{essential\PYGZus{}drop:}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{to\PYGZus{}drop}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} ensemble selectors}
+
+\PYG{n}{to\PYGZus{}drop} \PYG{o}{=} \PYG{n}{Fs}\PYG{o}{.}\PYG{n}{ensemble\PYGZus{}drop}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,} \PYG{n}{index\PYGZus{}col}\PYG{o}{=}\PYG{n}{indexCol}\PYG{p}{,} \PYG{n}{label\PYGZus{}col}\PYG{o}{=}\PYG{n}{labelCol}\PYG{p}{,} \PYG{n}{task}\PYG{o}{=}\PYG{n}{task}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ensemble\PYGZus{}drop:}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{to\PYGZus{}drop}\PYG{p}{)}
+\end{sphinxVerbatim}
 
 
 \section{Main Reference}

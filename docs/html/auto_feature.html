@@ -201,7 +201,7 @@
 <span class="go">                    [&#39;Name&#39;, &#39;Age&#39;, &#39;Sex&#39;, &#39;Salary&#39;, &#39;ChestPain&#39;, &#39;Chol&#39;, &#39;CreatDate&#39;]</span>
 <span class="go">                   )</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;CreatDate&#39;</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;CreatDate&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="k">import</span> <span class="n">dtypes_class</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">dtypes_class</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dtypes_class</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 <span class="go">(     feature       DataType</span>
 <span class="go">0       Name     StringType</span>
@@ -233,7 +233,7 @@
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>feature matrix</p>
+<dd class="field-even"><p>encoded dummy variable names and feature matrix</p>
 </dd>
 <dt class="field-odd">Author</dt>
 <dd class="field-odd"><p>Wenqiang Feng</p>
@@ -324,7 +324,7 @@
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> – input dataframe</p></li>
-<li><p><strong>index_col</strong> – the name of the index column</p></li>
+<li><p><strong>index_col</strong> – the name of the index column and the other columns you want to exclude</p></li>
 <li><p><strong>label_col</strong> – the name of the label column</p></li>
 <li><p><strong>corr_thold</strong> – threshold for collinear scores</p></li>
 <li><p><strong>method</strong> – the method to use for computing correlation, supported: pearson (default), spearman</p></li>
@@ -349,7 +349,7 @@ method to identify the essential drop features based on ensemble ML model (GBM).
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> – input dataframe</p></li>
-<li><p><strong>index_col</strong> – the name of the index column</p></li>
+<li><p><strong>index_col</strong> – the name of the index column and the other columns you want to exclude</p></li>
 <li><p><strong>label_col</strong> – the name of the label column</p></li>
 <li><p><strong>task</strong> – the ensemble model type, supported task “classification” or “regression”</p></li>
 <li><p><strong>importance_thold</strong> – the threshold of the feature importance if missing will be auto calculated by the
@@ -383,7 +383,7 @@ to identify the essential drop features.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> – input dataframe</p></li>
-<li><p><strong>index_col</strong> – the name of the index column</p></li>
+<li><p><strong>index_col</strong> – the name of the index column and the other columns you want to exclude</p></li>
 <li><p><strong>label_col</strong> – the name of the label column</p></li>
 <li><p><strong>missing_thold</strong> – threshold for missing values percentage</p></li>
 <li><p><strong>corr_thold</strong> – threshold for collinear scores</p></li>
@@ -408,7 +408,7 @@ to identify the essential drop features.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> – input dataframe</p></li>
-<li><p><strong>index_col</strong> – the name of the index column</p></li>
+<li><p><strong>index_col</strong> – the name of the index column and the other columns you want to exclude</p></li>
 <li><p><strong>label_col</strong> – the name of the label column</p></li>
 <li><p><strong>task</strong> – the ensemble model type, supported task “classification” or “regression”</p></li>
 <li><p><strong>importance_thold</strong> – the threshold of the feature importance if missing will be auto calculated by the
@@ -496,7 +496,7 @@ the importance_thold when importance_thold is missing</p></li>
     <p>
         &copy; Copyright 2020, Wenqiang Feng
       <span class="lastupdated">
-        Last updated on Jun 23, 2020.
+        Last updated on Jul 06, 2020.
       </span>
 
     </p>
