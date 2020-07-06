@@ -81,7 +81,8 @@ and
     :align: center    
 
 
-------------
+Regression
+----------
 
 .. literalinclude:: ../../test/demo3.py
      :language: python
