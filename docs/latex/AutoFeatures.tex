@@ -71,7 +71,7 @@
 
 
 \title{AutoFeatures: PySpark Auto Feature Selector}
-\date{July 06, 2020}
+\date{July 07, 2020}
 \release{1.0}
 \author{Wenqiang Feng}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -84,25 +84,16 @@
 \pagestyle{plain}
 \sphinxtableofcontents
 \pagestyle{normal}
-\phantomsection\label{\detokenize{index::doc}}
-
-\begin{quote}
-
-\begin{figure}[htbp]
-\centering
-
-\noindent\sphinxincludegraphics{{logo}.png}
-\end{figure}
+\phantomsection\label{\detokenize{index::doc}}\begin{quote}
 \end{quote}
 
 Welcome to our \sphinxstylestrong{AutoFeatures: PySpark Auto Feature Selector}!!! The PDF version
 can be downloaded from \sphinxhref{../latex/AutoFeatures.pdf}{HERE}.
 
 
-\chapter{Contents}
-\label{\detokenize{index:contents}}
 
-\section{Preface}
+
+\chapter{Preface}
 \label{\detokenize{preface:preface}}\label{\detokenize{preface:id1}}\label{\detokenize{preface::doc}}
 \begin{sphinxadmonition}{note}{Chinese proverb}
 
@@ -110,10 +101,10 @@ Good tools are prerequisite to the successful execution of a job. \textendash{} 
 \end{sphinxadmonition}
 
 
-\subsection{About}
+\section{About}
 \label{\detokenize{preface:about}}
 
-\subsubsection{About this API}
+\subsection{About this API}
 \label{\detokenize{preface:about-this-api}}
 This document is the \sphinxcode{\sphinxupquote{API}} book for our AutoFeatures: PySpark Auto Feature Selector \sphinxcite{reference:autofeatures} API.
 The PDF version can be downloaded from \sphinxhref{PyAudit.pdf}{HERE}. \sphinxstylestrong{You may download and distribute it. Please beaware,
@@ -123,7 +114,7 @@ The \sphinxcode{\sphinxupquote{API}} assumes that the reader has a preliminary k
 document is generated automatically by using \sphinxhref{http://sphinx.pocoo.org}{sphinx}.
 
 
-\subsubsection{About the author}
+\subsection{About the author}
 \label{\detokenize{preface:about-the-author}}\begin{itemize}
 \item {} 
 \sphinxstylestrong{Wenqiang Feng}
@@ -170,16 +161,16 @@ reflect the views of the IMA, UTK and DST.
 \end{itemize}
 
 
-\subsection{Feedback and suggestions}
+\section{Feedback and suggestions}
 \label{\detokenize{preface:feedback-and-suggestions}}
 Your comments and suggestions are highly appreciated. I am more than happy to receive
 corrections, suggestions or feedback through email (Wenqiang Feng: \sphinxhref{mailto:von198@gmail.com}{von198@gmail.com}) for improvements.
 
 
-\section{How to Install}
+\chapter{How to Install}
 \label{\detokenize{install:how-to-install}}\label{\detokenize{install:install}}\label{\detokenize{install::doc}}
 
-\subsection{Install with \sphinxstyleliteralintitle{\sphinxupquote{pip}}}
+\section{Install with \sphinxstyleliteralintitle{\sphinxupquote{pip}}}
 \label{\detokenize{install:install-with-pip}}
 You can install the \sphinxcode{\sphinxupquote{PyAudit}} from {[}PyPI{]}(\sphinxurl{https://pypi.org/project/AutoFeatures}):
 
@@ -188,17 +179,17 @@ pip install AutoFeatures
 \end{sphinxVerbatim}
 
 
-\subsection{Install from Repo}
+\section{Install from Repo}
 \label{\detokenize{install:install-from-repo}}
 
-\subsubsection{Clone the Repository}
+\subsection{Clone the Repository}
 \label{\detokenize{install:clone-the-repository}}
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 git clone https://github.com/runawayhorse001/AutoFeatures.git
 \end{sphinxVerbatim}
 
 
-\subsubsection{Install}
+\subsection{Install}
 \label{\detokenize{install:id1}}
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYG{n+nb}{cd} AutoFeatures
@@ -207,23 +198,23 @@ python setup.py install
 \end{sphinxVerbatim}
 
 
-\subsubsection{Uninstall}
+\subsection{Uninstall}
 \label{\detokenize{install:uninstall}}
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 pip uninstall AutoFeatures
 \end{sphinxVerbatim}
 
 
-\subsubsection{Test}
+\subsection{Test}
 \label{\detokenize{install:test}}
 
-\section{AutoFeatures Class}
+\chapter{AutoFeatures Class}
 \label{\detokenize{auto_feature:autofeatures-class}}\label{\detokenize{auto_feature:form-frame}}\label{\detokenize{auto_feature::doc}}
 
-\subsection{Utils Functions}
+\section{Utils Functions}
 \label{\detokenize{auto_feature:utils-functions}}
 
-\subsubsection{Data types}
+\subsection{Data types}
 \label{\detokenize{auto_feature:data-types}}\index{AutoFeatures (class in AutoFeatures)@\spxentry{AutoFeatures}\spxextra{class in AutoFeatures}}
 
 \begin{fulllineitems}
@@ -388,7 +379,7 @@ the name list of the encoded dummy variable for categorical columns
 
 
 
-\subsection{AutoFeatures Class}
+\section{AutoFeatures Class}
 \label{\detokenize{auto_feature:id1}}\index{AutoFeatures (class in AutoFeatures)@\spxentry{AutoFeatures}\spxextra{class in AutoFeatures}}
 
 \begin{fulllineitems}
@@ -697,12 +688,12 @@ The name list of the single unique features
 
 
 
-\section{AutoFeatures Demos}
+\chapter{AutoFeatures Demos}
 \label{\detokenize{demo:autofeatures-demos}}\label{\detokenize{demo:demo}}\label{\detokenize{demo::doc}}
 The following demos are designed to show how to use \sphinxcode{\sphinxupquote{AutoFeatures}} to select proper features.
 
 
-\subsection{AutoFeatures Essential Drop}
+\section{AutoFeatures Essential Drop}
 \label{\detokenize{demo:autofeatures-essential-drop}}
 For example:
 
@@ -778,10 +769,10 @@ essential dropped features:\PYG{o}{[}\PYG{l+s+s1}{\PYGZsq{}col3\PYGZsq{}}\PYG{o}
 \end{figure}
 
 
-\subsection{AutoFeatures  Ensemble Drop}
+\section{AutoFeatures  Ensemble Drop}
 \label{\detokenize{demo:autofeatures-ensemble-drop}}
 
-\subsubsection{Classification}
+\subsection{Classification}
 \label{\detokenize{demo:classification}}
 For example:
 
@@ -863,7 +854,7 @@ and
 \end{quote}
 
 
-\subsubsection{Regression}
+\subsection{Regression}
 \label{\detokenize{demo:regression}}
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYG{k+kn}{from} \PYG{n+nn}{pyspark}\PYG{n+nn}{.}\PYG{n+nn}{sql} \PYG{k+kn}{import} \PYG{n}{SparkSession}
@@ -912,7 +903,7 @@ and
 \end{sphinxVerbatim}
 
 
-\section{Main Reference}
+\chapter{Main Reference}
 \label{\detokenize{reference:main-reference}}\label{\detokenize{reference:reference}}\label{\detokenize{reference::doc}}
 \begin{sphinxthebibliography}{AutoFeat}
 \bibitem[AutoFeatures]{reference:autofeatures}

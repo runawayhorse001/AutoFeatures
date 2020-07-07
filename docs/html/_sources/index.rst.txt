@@ -1,7 +1,4 @@
-AutoFeatures: PySpark Auto Feature Selector
-===========================================
-
-  .. _fig_logo:
+ .. _fig_logo:
   .. figure:: images/logo.png
     :align: center
 
