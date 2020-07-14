@@ -18,7 +18,8 @@ AutoFeatures Class
 ++++++++++++++++++
 
 .. autoclass:: AutoFeatures.AutoFeatures
-   :members: unique_selector, missing_selector, corr_selector, importance_selector, essential_drop, ensemble_drop
+   :members: unique_selector, missing_selector, corr_selector,
+             importance_selector, essential_drop, ensemble_drop
 
 
 

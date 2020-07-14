@@ -1,4 +1,7 @@
- .. _fig_logo:
+
+.. _index:
+
+  .. _fig_logo:
   .. figure:: images/logo.png
     :align: center
 
