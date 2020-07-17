@@ -300,7 +300,7 @@ class AutoFeatures:
         if flag or index_col or label_col:
             if not isinstance(index_col, list):
                 index_col = [index_col]
-            excluded = list(dict.fromkeys(flag + index_col + [label_col]))
+            excluded = list(set(flag + index_col + [label_col]))
         else:
             excluded = []
 
@@ -447,10 +447,10 @@ class AutoFeatures:
 
         # the categorical cols need to be dropped (not the dummy name). It's a little bit tricky to determine the
         # drop out the categorical cols.
-        dropped_cat = [a for a in list(dict.fromkeys(dropped_dummy))
-                       if (a not in list(dict.fromkeys(keeped_dummy)) and a in categorical_cols)]
+        dropped_cat = [a for a in set(dropped_dummy)
+                       if (a not in set(keeped_dummy) and a in categorical_cols)]
 
-        imp_drop = list(dict.fromkeys(es_dropped + dropped_num + dropped_cat))
+        imp_drop = list(set(es_dropped + dropped_num + dropped_cat))
 
         end = time.time()
 
@@ -516,7 +516,7 @@ class AutoFeatures:
         if tracking:
             print('The essential selector took = ' + str(end - start) + ' s')
 
-        return list(dict.fromkeys(all_drop))
+        return list(set(all_drop))
 
     @classmethod
     def ensemble_drop(cls, data, index_col, label_col, task, importance_thold=None, cumulative_thold=0.96,
